@@ -35,4 +35,27 @@ class Book {
     book.push(newBook);
     return newBook;
   }
+  static async updateBook(id, newBookData) {
+    const books = await this.getAllBooks();
+    const existingBookIndex = books.findIndex((book) => book.id === id);
+    if (existingBookIndex === -1) {
+      return null;
+    }
+    const updatedBook = {
+      ...books[existingBookIndex],
+      ...newBookData,
+    };
+    books[existingBookIndex] = updatedBook;
+    return updatedBook;
+  }
+  static async deleteBook(id) {
+    const books = await this.getAllBooks();
+    const bookIndex = books.findIndex((book) => book.id === id);
+    if (bookIndex === -1) {
+      return false;
+    }
+    books.splice(bookIndex, 1);
+    return true;
+  }
 }
+module.exports = Book;
