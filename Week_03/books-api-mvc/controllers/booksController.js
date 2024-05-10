@@ -1,19 +1,29 @@
 const Book = require("../models/book");
+
 const getAllBooks = async (req, res) => {
   try {
     const books = await Book.getAllBooks();
     res.json(books);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Errpr retrieving books");
+    res.status(500).send("Error retrieving books");
   }
 };
+
 const getBookById = async (req, res) => {
   const bookId = parseInt(req.params.id);
-  if (!book) {
-    return res.status(404).send("Book not found");
+  try {
+    const book = await Book.getBookById(bookId);
+    if (!book) {
+      return res.status(404).send("Book not found");
+    }
+    res.json(book);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error retrieving book");
   }
 };
+
 const createBook = async (req, res) => {
   const newBook = req.body;
   try {
@@ -24,13 +34,15 @@ const createBook = async (req, res) => {
     res.status(500).send("Error creating book");
   }
 };
+
 const updateBook = async (req, res) => {
   const bookId = parseInt(req.params.id);
   const newBookData = req.body;
+
   try {
-    const updatedBook = await Book.updateBook(booksId, newBookData);
+    const updatedBook = await Book.updateBook(bookId, newBookData);
     if (!updatedBook) {
-      return res.status(404).send("Books not found");
+      return res.status(404).send("Book not found");
     }
     res.json(updatedBook);
   } catch (error) {
@@ -41,6 +53,7 @@ const updateBook = async (req, res) => {
 
 const deleteBook = async (req, res) => {
   const bookId = parseInt(req.params.id);
+
   try {
     const success = await Book.deleteBook(bookId);
     if (!success) {
@@ -52,7 +65,8 @@ const deleteBook = async (req, res) => {
     res.status(500).send("Error deleting book");
   }
 };
-module.exorts = {
+
+module.exports = {
   getAllBooks,
   createBook,
   getBookById,
