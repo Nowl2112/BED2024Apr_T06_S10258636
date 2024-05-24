@@ -16,6 +16,7 @@ app.get("/books/:id", booksController.getBookById);
 app.post("/books", validateBook, booksController.createBook);
 app.put("/books/:id", booksController.updateBook);
 app.delete("/books/:id", booksController.deleteBook);
+app.get("/books-count", booksController.getBookCount); // Add this line
 app.listen(port, async () => {
   try {
     // Connect to the database

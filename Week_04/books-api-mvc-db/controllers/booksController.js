@@ -64,10 +64,21 @@ const deleteBook = async (req, res) => {
   }
 };
 
+const getBookCount = async (req, res) => {
+  try {
+    const bookCount = await Book.getBookCount();
+    res.json({ count: bookCount });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error retrieving book count");
+  }
+};
+
 module.exports = {
   getAllBooks,
   createBook,
   getBookById,
   updateBook,
   deleteBook,
+  getBookCount, // Add this line
 };
