@@ -1,0 +1,19 @@
+CREATE TABLE Users (
+  id INT PRIMARY KEY IDENTITY,
+  username VARCHAR(50) NOT NULL UNIQUE,
+  email VARCHAR(100) NOT NULL UNIQUE
+);
+The script checks if the Users table already exists. If not, it creates the table with the following columns:
+id: An integer column with auto-incrementing primary key behavior for unique user identification.
+username: A varchar column with a maximum length of 50 characters, marked as NOT NULL and UNIQUE for distinct usernames.
+email: A varchar column with a maximum length of 100 characters, marked as NOT NULL and UNIQUE for distinct email addresses.
+
+CREATE TABLE UserBooks (
+  id INT PRIMARY KEY IDENTITY,
+  user_id INT FOREIGN KEY REFERENCES Users(id),
+  book_id INT FOREIGN KEY REFERENCES Books(id)
+);
+The UserBooks table has three columns:
+id: An integer column with auto-incrementing primary key behavior for unique identification of each relationship record.
+user_id: An integer foreign key referencing the id column of the Users table, establishing a connection between a specific user and the books associated with them.
+book_id: An integer foreign key referencing the id column of the Books table (assuming you have a separate Books table), establishing a connection between a specific book and the users who have it.
