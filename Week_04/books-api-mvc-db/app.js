@@ -7,10 +7,13 @@ const bodyParser = require("body-parser"); // Import body-parser
 const validateBook = require("./middlewares/validateBook");
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
+const staticMiddleware = express.static("public"); // Path to the public folder
 
 // Include body-parser middleware to handle JSON data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
+app.use(staticMiddleware); // Mount the static middleware
+
 // Routes for GET requests (replace with appropriate routes for update and delete later)
 app.get("/books", booksController.getAllBooks);
 app.get("/books/:id", booksController.getBookById);
@@ -23,6 +26,7 @@ app.get("/users", usersController.getAllUsers); // Get all users
 app.get("/users/:id", usersController.getUserById); // Get user by ID
 app.put("/users/:id", usersController.updateUser); // Update user
 app.delete("/users/:id", usersController.deleteUser); // Delete user
+app.get("/users/search", usersController.searchUsers);
 
 app.listen(port, async () => {
   try {
